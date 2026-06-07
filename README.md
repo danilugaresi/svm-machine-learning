@@ -1,4 +1,4 @@
-# Support Vector Machines: Optimization and Machine Learning
+# Support Vector Machines y Clasificación Supervisada
 Academic project developed as part of the MSc in Statistical Techniques at the Universidade de Santiago de Compostela.
 ## Overview
 This project studies Support Vector Machines (SVMs) from both optimization and machine learning perspectives.
