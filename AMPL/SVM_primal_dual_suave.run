@@ -1,0 +1,51 @@
+# Ejecución del primal y el dual del problema suave
+# Run with "include SVM_primal_dual_suave.run;"
+
+# Primal
+reset;
+reset;
+
+printf"\n\n Comenzando a resolver...";
+
+option solver gurobi;
+option gurobi_options "timing 1"; # Para que Gurobi devuelva el tiempo de ejecucion por pantalla
+
+model SVM_primal_suave.mod;
+data SVM_ECV.dat;
+
+printf"\n\n##############################\n";
+printf"Resolvemos mediante el primal \n";
+printf"##############################\n";
+solve;
+
+printf"\n--Vector normal hiperplano: \n";
+printf{d in 1..dim}"w[%s]= %6.4f\n",d,w[d];
+printf"\n--Lado derecho:\n";
+printf"b=%6.4f\n",b;
+
+
+# Dual
+reset;
+reset;
+
+model SVM_dual_suave.mod;;
+data SVM_ECV.dat
+
+printf"\n\n##############################\n";
+printf"Resolvemos mediante el dual \n";
+printf"##############################\n";
+solve;
+
+printf"\n####\n";
+printf"## Objetivo= %6.4f\n",objetivo;
+
+printf"\n--Multiplicadores: \n";
+printf {i in 1..nobs} "u[%d] = %6.4f\n", i, u[i];
+
+printf"\n--Vector normal hiperplano: \n";
+printf{d in 1..dim}"w[%s]= %6.4f\n",d,sum{i in 1..nobs} y[i]*u[i]*data[i,d];
+
+printf"\n--Lado derecho b: \n";
+printf{i in 1..nobs: u[i] > 1e-6 && u[i] < C-1e-6}"u[%s]=%6.4f. Despejando b=%6.4f\n",i,u[i],
+y[i]*(1-y[i]*sum{d in 1..dim} (data[i,d]*sum{j in 1..nobs} y[j]*u[j]*data[j,d]));
+printf"\n\n##############################\n";

@@ -1,0 +1,25 @@
+# Ejecución del dual del problema con kernel
+# Run with "include SVM_dual_kernel.run;"
+
+reset;
+reset;
+
+model SVM_dual_kernel_gauss.mod; # Elegir kernel
+# model SVM_dual_kernel_polin.mod;
+data SVM_ECV.dat;
+
+option solver gurobi;
+solve;
+
+printf"\n\n##############################\n";
+printf"Resolucion a traves del dual \n";
+printf"##############################\n";
+printf"--Objetivo= %6.4f\n",objetivo;
+
+printf"\n--Multiplicadores:\n";
+printf{i in 1..nobs}"u[%s]=%6.4f\n",i,u[i];
+
+printf"\n--Lado derecho b: \n";
+printf{i in 1..nobs: u[i] > 1e-6 && u[i] < C-1e-6}"u[%s]=%6.4f. Despejando b=%6.4f\n",i,u[i],
+y[i] - sum{j in 1..nobs} u[j]*y[j]*K[i,j];
+printf"\n\n##############################\n";
