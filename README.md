@@ -18,7 +18,7 @@ Posteriormente, la metodología se aplica a un problema real de clasificación u
 * Conclusiones
 * Referencias
 ## Herramientas
-- R: preprocesamiento de datos, análisis estadístico y preparación del conjunto de datos del INE para su utilización en AMPL.
+- R: preprocesamiento de datos y preparación del conjunto de datos del INE para su utilización en AMPL.
 - AMPL: formulación y resolución de los modelos de optimización asociados a las C-SVMs y a las SVMs con kernels.
 - Python: visualización de ejemplos mediante NumPy y Matplotlib.
 ## Estructura del repositorio
